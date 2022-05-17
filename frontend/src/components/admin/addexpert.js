@@ -6,17 +6,20 @@ import app_config from "../../config";
 import Swal from 'sweetalert2';
   
 
-const Signup = () => {
+const AddExpert = () => {
 
 const url = app_config.backend_url;
 
   // for using formik
   // 1. object for initializing which should match with model
   const userForm = {
-    email: "",
-    password: "",
-    username: "",
-    age: 0,
+    name : "",
+    qualification : "" ,
+    occupation : "" ,
+    experience : 0,
+    mainareaofexperience :  "",
+    email : "",
+
   };
   // 2. create a function for form submission
   const userSubmit = (formdata) => {
@@ -27,7 +30,7 @@ const url = app_config.backend_url;
 // 3.Data
 // 4.Data format
 
- fetch( url + "/user/add",{
+ fetch( url + "/expert/add",{
    method : 'POST',
    body : JSON.stringify(formdata),
    headers : {
@@ -122,4 +125,4 @@ const url = app_config.backend_url;
     </div>
   );
 };
-export default Signup;
+export default AddExpert;

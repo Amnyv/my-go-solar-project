@@ -10,7 +10,7 @@ import { Formik } from "formik";
 import app_config from "../../config";
 import Swal from 'sweetalert2';
 
-const Login = () => {
+const Sellerlogin = () => {
   const url =app_config.backend_url;
 
   const loginForm = {
@@ -97,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Sellerlogin;

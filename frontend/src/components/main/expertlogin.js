@@ -8,21 +8,22 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import app_config from "../../config";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const url =app_config.backend_url;
+const Expertlogin = () => {
+  const url = app_config.backend_url;
+  const navigate = useNavigate();
 
   const loginForm = {
-    email : "",
-    passworsd : "",
-     
+    email: "",
+    passworsd: "",
   };
 
   const loginSubmit = (formdata) => {
     console.log(formdata);
 
-    fetch(url + "/user/authenticate", {
+    fetch(url + "/expert/authenticate", {
       method: "POST",
       body: JSON.stringify(formdata),
       headers: { "Content-Type": "application/json" },
@@ -33,6 +34,11 @@ const Login = () => {
           title: "Success!!",
           text: "Successfully loggedin",
         });
+        res.json().then((data) => {
+            console.log(data);
+            sessionStorage.setItem('expert', JSON.stringify(data));
+            navigate('/expert/expertchat');
+        })
       } else if (res.status === 400) {
         Swal.fire({
           icon: "error",
@@ -97,4 +103,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Expertlogin;
