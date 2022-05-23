@@ -1,8 +1,8 @@
-import { Dashboard } from '@mui/icons-material';
-import { AccountCircle } from '@mui/icons-material';
-import React from 'react'
-import { Outlet } from 'react-router-dom';
-import Sidebar from '../sidebar';
+import { Dashboard } from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./sidebar";
 
 const User = () => {
   const sidebarOptions = [
@@ -20,12 +20,11 @@ const User = () => {
 
   return (
     <div>
-      <h1>Admin</h1>
       <Sidebar sidebarOptions={sidebarOptions} title="User Dashboard">
         <Outlet />
       </Sidebar>
     </div>
-    )
-}
+  );
+};
 
-export default User ;
+export default User;

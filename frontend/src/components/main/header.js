@@ -24,8 +24,12 @@ import { useEffect, useState } from "react";
 
 const pages = [
   {
-    name: "",
-    link: "/list",
+    name: "Expert Login",
+    link: "/main/expertlogin",
+  },
+  {
+    name: "Seller Login",
+    link: "/main/sellerlogin",
   },
 ];
 
@@ -75,9 +79,14 @@ const Header = () => {
       link: "/profile",
     },
     {
-      name: "Manage Vlogs",
+      name: "Chat with Expert",
       icon: <Subscriptions />,
-      link: "/managevlog",
+      link: "/user/chat",
+    },
+    {
+      name: "Manage Orders",
+      icon: <Subscriptions />,
+      link: "/user/manageorder",
     },
     {
       name: "Logout",
