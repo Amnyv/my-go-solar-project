@@ -3,12 +3,10 @@ import { Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import app_config from "../../config";
-import Swal from 'sweetalert2';
-  
+import Swal from "sweetalert2";
 
 const Signup = () => {
-
-const url = app_config.backend_url;
+  const url = app_config.backend_url;
 
   // for using formik
   // 1. object for initializing which should match with model
@@ -22,35 +20,28 @@ const url = app_config.backend_url;
   const userSubmit = (formdata) => {
     console.log(formdata);
 
-// 1.Address
-// 2.Request method
-// 3.Data
-// 4.Data format
+    // 1.Address
+    // 2.Request method
+    // 3.Data
+    // 4.Data format
 
- fetch( url + "/user/add",{
-   method : 'POST',
-   body : JSON.stringify(formdata),
-   headers : {
-     "Content-Type" : "application/json",
-
-   },
-  })
-  .then(res => res.json())
-  .then((data)=>{
-    console.log(data);
-    Swal.fire({
-      icon: "success",
-      title: "Success",
-      text: "Registered Successfully",
-    });
-  });
-};
-
-
-
-
-
-
+    fetch(url + "/user/add", {
+      method: "POST",
+      body: JSON.stringify(formdata),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Registered Successfully",
+        });
+      });
+  };
 
   //   3. Create Formik Component inside JSX
 
@@ -65,11 +56,7 @@ const url = app_config.backend_url;
       <Container>
         <h1>Signup</h1>
 
-        <Formik
-          initialValues={userForm}
-          onSubmit={userSubmit}
-          validationSchema={myvalidation}
-        >
+        <Formik initialValues={userForm} onSubmit={userSubmit}>
           {({ values, handleSubmit, handleChange, errors }) => (
             <form onSubmit={handleSubmit}>
               <TextField
@@ -79,8 +66,6 @@ const url = app_config.backend_url;
                 id="email"
                 value={values.email}
                 onChange={handleChange}
-                helperText={errors.email}
-                error={Boolean(errors.email)}
               />
               <TextField
                 className="mt-3"
@@ -90,8 +75,6 @@ const url = app_config.backend_url;
                 id="password"
                 value={values.password}
                 onChange={handleChange}
-                helperText={errors.password}
-                error={Boolean(errors.password)}
               />
               <TextField
                 className="mt-3"

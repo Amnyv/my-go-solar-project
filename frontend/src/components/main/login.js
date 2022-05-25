@@ -8,16 +8,17 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import app_config from "../../config";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const url =app_config.backend_url;
+  const url = app_config.backend_url;
 
   const loginForm = {
-    email : "",
-    passworsd : "",
-     
+    email: "",
+    passworsd: "",
   };
+  const navigate = useNavigate();
 
   const loginSubmit = (formdata) => {
     console.log(formdata);
@@ -32,6 +33,18 @@ const Login = () => {
           icon: "success",
           title: "Success!!",
           text: "Successfully loggedin",
+        });
+
+        res.json().then((data) => {
+          if (data.isAdmin) {
+            sessionStorage.setItem("admin", JSON.stringify(data));
+            navigate("/admin/addexpert");
+            return;
+          } else {
+            sessionStorage.setItem("user", JSON.stringify(data));
+            navigate("/main/home");
+            return;
+          }
         });
       } else if (res.status === 400) {
         Swal.fire({

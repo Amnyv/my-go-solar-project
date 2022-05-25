@@ -8,21 +8,22 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import app_config from "../../config";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Sellerlogin = () => {
-  const url =app_config.backend_url;
+  const url = app_config.backend_url;
 
   const loginForm = {
-    email : "",
-    passworsd : "",
-     
+    email: "",
+    passworsd: "",
   };
+  const navigate = useNavigate();
 
   const loginSubmit = (formdata) => {
     console.log(formdata);
 
-    fetch(url + "/user/authenticate", {
+    fetch(url + "/seller/authenticate", {
       method: "POST",
       body: JSON.stringify(formdata),
       headers: { "Content-Type": "application/json" },
@@ -32,6 +33,11 @@ const Sellerlogin = () => {
           icon: "success",
           title: "Success!!",
           text: "Successfully loggedin",
+        });
+        res.json().then((data) => {
+          sessionStorage.setItem("seller", JSON.stringify(data));
+          navigate("/seller/addequipment");
+          return;
         });
       } else if (res.status === 400) {
         Swal.fire({
@@ -60,11 +66,11 @@ const Sellerlogin = () => {
             {({ values, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <TextField
-                  error
+                  // error
                   className="w-100 mb-4"
                   label="Email"
                   variant="filled"
-                  helperText="Invalid Email ID"
+                  // helperText="Invalid Email ID"
                   id="email"
                   value={values.email}
                   onChange={handleChange}
@@ -74,7 +80,7 @@ const Sellerlogin = () => {
                   label="Password"
                   variant="filled"
                   type="password"
-                  helperText="Enter correct password"
+                  // helperText="Enter correct password"
                   id="password"
                   value={values.password}
                   onChange={handleChange}

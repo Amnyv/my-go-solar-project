@@ -5,14 +5,14 @@ import { io } from "socket.io-client";
 import app_config from "../../config";
 import "./chat.css";
 
-const Chat = () => {
+const UserChat = () => {
   // backend url
-  const url = app_config.api_url;
-  const { trainerid } = useParams();
+  const url = app_config.backend_url;
+  const { expertid } = useParams();
 
-  const [trainerOnline, setTrainerOnline] = useState(false);
-  const [trainerSocketId, setTrainerSocketId] = useState("");
-  const [trainer, setTrainer] = useState({});
+  const [expertOnline, setExpertOnline] = useState(false);
+  const [expertSocketId, setExpertSocketId] = useState("");
+  const [expert, setExpert] = useState({});
 
   const [msgList, setMsgList] = useState([]);
 
@@ -21,15 +21,16 @@ const Chat = () => {
 
   const [text, setText] = useState("");
 
-  const checkTrainerisOnline = () => {
-    socket.emit("checktrainer", trainerid);
+  const checkExpertisOnline = () => {
+    socket.emit("checkexpert", expertid);
   };
-  const fetchTrainerData = () => {
-    fetch(url + "/trainer/getbyid/" + trainerid).then((res) => {
+
+  const fetchExpertData = () => {
+    fetch(url + "/expert/getbyid/" + expertid).then((res) => {
       if (res.status === 200) {
         res.json().then((data) => {
-          setTrainer(data);
-          // console.log(data);
+          setExpert(data);
+          console.log(data);
         });
       }
     });
@@ -37,9 +38,9 @@ const Chat = () => {
 
   useEffect(() => {
     //   connect with the backend
-    fetchTrainerData();
+    fetchExpertData();
     socket.connect();
-    checkTrainerisOnline();
+    checkExpertisOnline();
   }, []);
 
   socket.on("recmsg", (data) => {
@@ -50,14 +51,14 @@ const Chat = () => {
     setMsgList(newList);
   });
 
-  socket.on("checktrainerfromserver", (data) => {
+  socket.on("checkexpertfromserver", (data) => {
     console.log(data);
-    setTrainerOnline(data.status);
-    setTrainerSocketId(data.socketId);
+    setExpertOnline(data.status);
+    setExpertSocketId(data.socketId);
   });
 
   const sendMessage = () => {
-    let obj = { message: text, sent: true, socketId: trainerSocketId };
+    let obj = { message: text, sent: true, socketId: expertSocketId };
     // console.log(obj);
     // for sending the event on backend
     socket.emit("sendmsg", obj);
@@ -84,19 +85,19 @@ const Chat = () => {
   return (
     <div>
       <div className="container">
-        <Typography variant="h3">Chat with your trainer</Typography>
+        <Typography variant="h3">Chat with your expert</Typography>
         <hr />
         <div className="card">
           <div className="card-body">
             <div className="row">
               <div className="col-6">
                 <Typography variant="h4">
-                  Trainer Name : {trainer.fullname}
+                  Expert Name : {expert.fullname}
                 </Typography>
               </div>
               <div className="col-6">
                 <Typography variant="h4">
-                  Status : {trainerOnline ? "Online" : "Offline"}
+                  Status : {expertOnline ? "Online" : "Offline"}
                 </Typography>
               </div>
             </div>
@@ -125,4 +126,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default UserChat;

@@ -3,7 +3,6 @@ const express = require("express");
 const Model = require("../models/sellerModel");
 const router = express.Router();
 
-
 router.get("/home", (req, res) => {
   console.log("a request at user home");
   res.send("you have found user Home");
@@ -24,20 +23,21 @@ router.post("/add", (req, res) => {
     });
 });
 
-router.get('/getall', (req, res) => {
+router.get("/getall", (req, res) => {
   Model.find({})
-  .then((data) => {
-    console.log('data fetched from user');
-    res.status(200).json(data);
-  }).catch((err) => {
-    console.error(err);
-    res.status(500).json(err);
-  });
-})
+    .then((data) => {
+      console.log("data fetched from user");
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json(err);
+    });
+});
 
-router.post('/authentication' , (req ,res) => {
+router.post("/authenticate", (req, res) => {
   const formdata = req.body;
-  Model.findOne({email : formdata.email , password : formdata.password})
+  Model.findOne({ email: formdata.email, password: formdata.password })
     .then((data) => {
       console.log("data saved");
       res.status(200).json(data);
